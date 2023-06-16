@@ -21,12 +21,12 @@ function Travel({travelPosts}: Props) {
             {/* Card Rows */}
 
             <div className='sm:flex gap-8 justify-between'>
-                <Card className='basis-1/3  sm:mt-0' imageHeight='h-48' post={travelPosts[0]} />
-                <Card className='basis-1/3  sm:mt-0' imageHeight='h-48' post={travelPosts[1]}/>
-                <Card className='basis-1/3  sm:mt-0' imageHeight='h-48' post={travelPosts[2]}/>
+                <Card className='basis-1/3  sm:mt-0' imageHeight='h-48' post={travelPosts[0]}  isLongForm isSmallCard/>
+                <Card className='basis-1/3  sm:mt-0' imageHeight='h-48' post={travelPosts[1]} isLongForm isSmallCard/>
+                <Card className='basis-1/3  sm:mt-0' imageHeight='h-48' post={travelPosts[2]} isLongForm isSmallCard/>
             </div> 
 
-            <Card className=' sm::flex justify-between mt-3' imageHeight='h-80' post={travelPosts[3]}/>
+            <Card className=' sm::flex justify-between mt-3' imageHeight='h-80' post={travelPosts[3]} isLongForm isSmallCard/>
             </section>
   )
 }
