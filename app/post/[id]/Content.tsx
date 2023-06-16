@@ -4,8 +4,9 @@ import { FormattedPost } from '@/app/types'
 import Image from 'next/image';
 import { useEditor, EditorContent, Editor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import EditorMenuBar from './EditorMenuBar';
 import CategoryAndEdit from './CategoryAndEdit';
+import Article from './Article';
+import e from 'express';
 
 type Props = {
     post: FormattedPost;
@@ -23,6 +24,10 @@ const Content = ({ post }: Props) => {
      const [content, setContent] = useState<string>(post.content);
      const [contentError, setContentError] = useState<string>("");
      const [tempContent, setTempContent] = useState<string>(content);
+      
+    const date = new Date(post?.createdAt);
+    const options = { year: "numeric", month: "long", day: "numeric" } as any;
+    const formattedDate = date.toLocaleDateString("en-US", options);
 
      const handleIsEditable = (bool: boolean) =>{
         setisEditable(bool);
@@ -45,13 +50,46 @@ const Content = ({ post }: Props) => {
         ],
         content: content,
         onUpdate: handleOnChangeContent,
+        editorProps:{
+          attributes:{
+            class: "prose prose-sm xl:prose-2xl leading-8 focus:outline-none w-full max-w-full"
+          }
+        },
         editable : isEditable,
       })
   
   
-  const handleSubmit = () =>{
-  
-  }
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
+    e.preventDefault();
+
+    // Validation Checks
+    if(title === "") setTitleError("This field is required")
+    if(editor?.isEmpty) setContentError("This field is required")
+    if(title === "" || editor?.isEmpty) return;
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/post/${post?.id}`,
+      {
+        method : "PATCH",
+        headers:{
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: title,
+          content: content,
+        }),
+      }
+    );
+    const data = await response.json();
+
+    handleIsEditable(false);
+    setTempTitle("");
+    setTempContent("");
+
+    setTitle(data.title);
+    setContent(data.content);
+    editor?.commands.setContent(data.content);
+  };
 
   return (
     <div className='prose w-full max-w-full mb-10'>
@@ -85,14 +123,16 @@ const Content = ({ post }: Props) => {
                 onChange={handleOnChangeTitle}
                 value={title}
                />
+               {titleError && <p className='mt-1 text-wh-500'>{titleError}</p>}
              </div>
            ):(<h3 className='font bold text-3xl mt-3'>{title}</h3>)}
            <div className='flex gap-3'>
             <h5 className='text-xs font-semibold'>{post.author}</h5>
-            <h6 className='text-xs text-wh-300'>{post.createdAt}</h6>
+            <h6 className='text-xs text-wh-300'>{formattedDate}</h6>
 
            </div>
            </>
+         
 
            <div className='relative w-auto mt-2 mb-16 h-96'>
             <Image 
@@ -107,16 +147,14 @@ const Content = ({ post }: Props) => {
             />
            </div>
 
-           <div className={isEditable? "border-2 rounded-md bg-wh-50 p-3": "w-full max-w-full"}>
-            {isEditable && (
-                <>
-                <EditorMenuBar editor={editor} />
-                <hr className='border-1 mt-2 mb-5' />
-                </>
-            )}
-            <EditorContent editor={editor} />
-            
-           </div>
+           <Article 
+           contentError={contentError}
+           editor={editor}
+           isEditable={isEditable}
+           setContent={setContent}
+           title={title}
+           />
+
 
            {/* {submit button} */}
 

@@ -3,6 +3,7 @@ import SocialLinks from './SocialLinks'
 import Subscribe from './Subscribe'
 import Image from 'next/image'
 import Ad2 from 'public/assets/ad-2.png'
+import aboutProfile from 'public/assets/about-profile.jpg'
 
 type Props = {}
 
@@ -20,14 +21,12 @@ const Sidebar = (props: Props) => {
             <h4 className='font-bold text-xs text-center bg-wh-900 py-2 px-5 text-wh-50'>
                 About the Blog
             </h4>   
-            <div className='bg-wh-50 py-2 flex justify-center'>profile image</div>
+            <div className=' my-3 flex justify-center'><Image  style={{ width: "500px", height: "250px", objectFit: "cover" }} alt="profile image" src={aboutProfile} /></div>
 
             <h4 className='font-bold text-xs text-center  py-2 px-5 text-wh-900'>
-               albert einstien
+               Emily Smith
             </h4> 
-            <p className='text-center text-wh-500 text-sm'>
-                some text
-            </p>
+           
            
     </section>
         
