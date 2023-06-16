@@ -8,7 +8,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 
-export async function POST(request: Request){
+export async function POST(request: Request, response: any){
     try{
        const { title, role } = await request.json();
 
@@ -19,8 +19,8 @@ export async function POST(request: Request){
        },
          {
             role: "system",
-            content: `${role || "I am helpful and hardworking assistant"}, Write with html tags`,
-         }
+            content: `${role || "I am helpful and hardworking assistant"}. Write with html tags`,
+         },
     ]});
       
        return NextResponse.json({
