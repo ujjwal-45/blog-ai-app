@@ -15,7 +15,7 @@ export async function POST(request: Request, response: any){
        const aiResponse: AxiosResponse<CreateChatCompletionResponse, any> = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [{role: "user",
-         content:`Create 4 line blog post with html tags based on the given title ${title}` ,
+         content:`Create 3 line blog post with html tags based on the given title ${title}` ,
        },
          {
             role: "system",
