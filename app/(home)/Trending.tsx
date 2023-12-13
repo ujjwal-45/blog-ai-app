@@ -56,7 +56,7 @@ const Trending = ( {trendingPosts}: Props) => {
             <TrendingCard className='col-span-1 row-span-1 bg-wh-500 ' post={trendingPosts[2]}></TrendingCard>
             <TrendingCard className='col-span-1 row-span-1 bg-wh-500 ' post={trendingPosts[3]}></TrendingCard>
         </div>
-        <p className='text-sm'> Random text</p>
+        <p className='text-sm'> Will AI end human race ?</p>
         
     </section>
   )
