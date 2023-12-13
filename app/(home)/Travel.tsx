@@ -15,7 +15,7 @@ function Travel({travelPosts}: Props) {
                 <h4 className='font-bold text-xl bg-accent-orange py-2 px-5 text-wh-900'>
                     TRAVEL
                 </h4>
-                <p className='text-2xl font-bold'>Latest News in Technologies</p>
+                <p className='text-2xl font-bold'>Destinations for the new Millenniums</p>
             </div>
 
             {/* Card Rows */}
